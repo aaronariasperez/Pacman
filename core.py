@@ -2,7 +2,7 @@ import sys, pygame
 from pygame.locals import *
 import constants as CONST
 import utils as UTILS
-import ghost as GH
+import pacman as PAC
 
 class Core:
 
@@ -22,7 +22,7 @@ class Core:
 
     #*************MAINLOOP*************
     def main_loop(self):
-        ghost = GH.Ghost()
+        pacman = PAC.Pacman()
 
         clock = pygame.time.Clock()
         while True:
@@ -34,11 +34,13 @@ class Core:
                     sys.exit(0)
 
             #**UPDATES**
-            ghost.update(time, keys)
+            pacman.update(time, keys)
 
             #**DRAW**
             self.screen.blit(self.background_image, (0, 0))
-            self.screen.blit(ghost.image, ghost.rect)
+
+            pacman.draw(self.screen)
+            #self.screen.blit(pacman.image, pacman.rect)
             pygame.display.flip()
 
         return 0
