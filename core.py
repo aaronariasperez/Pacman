@@ -11,13 +11,22 @@ class Core:
         pygame.init()
 
         self.screen = pygame.display.set_mode((CONST.WIDTH, CONST.HEIGHT))
-        pygame.display.set_caption("Pruebas Pygame")
+        pygame.display.set_caption("Pacman Remake by AaronArias")
 
-        self.background_image = UTILS.load_image('images/backprueba.png')
-
+        #self.background_image = UTILS.load_image('images/backprueba.png')
+        self.wall_image = UTILS.load_image('images/wall.png')
+        self.floor_image = UTILS.load_image('images/floor.png')
 
     #*************Auxiliars*************
+    def drawMap(self):
+        self.screen.fill((0,0,0))
 
+        for i in range(CONST.ROWS):
+            for j in range(CONST.COLS):
+                if CONST.gameMap[j,i]==1:
+                    self.screen.blit(self.wall_image, (i*CONST.CELL_TAM, j*CONST.CELL_TAM))
+                elif CONST.gameMap[j,i]==0:
+                    self.screen.blit(self.floor_image, (i*CONST.CELL_TAM, j*CONST.CELL_TAM))
 
 
     #*************MAINLOOP*************
@@ -26,6 +35,8 @@ class Core:
 
         clock = pygame.time.Clock()
         while True:
+            print(CONST.gameMap)
+
             time = clock.tick(CONST.FPS)
             keys = pygame.key.get_pressed()
 
@@ -37,7 +48,8 @@ class Core:
             pacman.update(time, keys)
 
             #**DRAW**
-            self.screen.blit(self.background_image, (0, 0))
+            #self.screen.blit(self.background_image, (0, 0))
+            self.drawMap()
 
             pacman.draw(self.screen)
             #self.screen.blit(pacman.image, pacman.rect)
